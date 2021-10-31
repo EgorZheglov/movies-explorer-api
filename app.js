@@ -6,7 +6,8 @@ const auth = require('./middlewares/auth');
 const user = require('./routes/user');
 const movie = require('./routes/movie');
 const errorValidator = require('./middlewares/errorValidator');
-const { requestLogger, errorLogger } = require('./middlewares/logger')
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
 const {
   login,
   createUser,
