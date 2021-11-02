@@ -19,6 +19,7 @@ const validateMoviePost = celebrate({
     nameRU: Joi.string().required().min(2).max(30),
     nameEN: Joi.string().required().min(2).max(30),
     director: Joi.string().required(),
+    duration: Joi.number().required(),
     country: Joi.string().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
@@ -29,6 +30,11 @@ const validateMoviePost = celebrate({
   })
 });
 
+const validateParams = celebrate({
+  params: Joi.object().keys({
+    id: Joi.string().length(24).hex(),
+  }),
+});
 
 const validateUserLogin = celebrate({
   body: Joi.object().keys({
@@ -49,4 +55,5 @@ module.exports = {
   validateMoviePost,
   validateUserLogin,
   validateUpdateUser,
+  validateParams,
 };

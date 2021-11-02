@@ -2,6 +2,7 @@
 /* eslint-disable linebreak-style */
 const BadRequestError = require('../utils/BadRequestError');
 const NotFoundError = require('../utils/NotFoundError');
+const ForbiddenError = require('../utils/ForBiddenError');
 
 const Movie = require('../models/movie');
 
@@ -10,12 +11,17 @@ const getAllMovies = (req, res, next) => Movie.find({}).then((cards) => res.stat
 
 const deleteMovie = (req, res, next) => Movie.findById(req.params.id)
   .then((movie) => {
+    const owner = req.user;
 
     if (!movie) {
       next(new NotFoundError('Данные не найдены'));
     } else {
-      Movie.deleteOne(movie)
+      if (owner._id !== movie.owner.toString()) {
+        next(new ForbiddenError('Недостаточно прав'));
+      } else {
+        Movie.deleteOne(movie)
           .then(() => res.status(200).send(movie));
+      }
     }
   })
   .catch((err) => {
@@ -27,10 +33,36 @@ const deleteMovie = (req, res, next) => Movie.findById(req.params.id)
   });
 
 const addMovie = (req, res, next) => {
-  const { nameRU, nameEN, director, country, year, description, image, trailer, thumbnail, movieId } = req.body;
+  const {
+    nameRU,
+    nameEN,
+    director,
+    duration,
+    country,
+    year,
+    description,
+    image,
+    trailer,
+    thumbnail,
+    movieId,
+  } = req.body;
+
   const owner = req.user;
 
-  return Movie.create({ nameRU, nameEN, director, country, year, description, image, trailer, thumbnail, movieId, owner })
+  return Movie.create({
+    nameRU,
+    nameEN,
+    director,
+    duration,
+    country,
+    year,
+    description,
+    image,
+    trailer,
+    thumbnail,
+    movieId,
+    owner,
+  })
     .then((movie) => res.status(200).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -40,7 +72,6 @@ const addMovie = (req, res, next) => {
       }
     });
 };
-
 
 module.exports = {
   getAllMovies,

@@ -7,6 +7,7 @@ const user = require('./routes/user');
 const movie = require('./routes/movie');
 const errorValidator = require('./middlewares/errorValidator');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+require('dotenv').config();
 
 const {
   login,
@@ -17,14 +18,14 @@ const {
   validateUsersPost,
 } = require('./middlewares/inputRequestValidation');
 
-const { port = 3000 } = process.env;
+const { port = 3000, NODE_ENV } = process.env;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(requestLogger);
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb')
+mongoose.connect(NODE_ENV === 'production' ? MONGO_DB_ADRESS : 'mongodb://localhost:27017/bitfilmsdb')
   // eslint-disable-next-line no-console
   .catch((err) => console.log(err));
 
@@ -49,5 +50,3 @@ app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`app listening port is running on port ${port}`);
 });
-
-

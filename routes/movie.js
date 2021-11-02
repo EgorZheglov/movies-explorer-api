@@ -8,10 +8,11 @@ const {
 
 const {
   validateMoviePost,
+  validateParams,
 } = require('../middlewares/inputRequestValidation');
 
 movie.get('/movies', getAllMovies);
 movie.post('/movies', validateMoviePost, addMovie);
-movie.delete('/movies/:id', deleteMovie);
+movie.delete('/movies/:id', validateParams, deleteMovie);
 
 module.exports = movie;

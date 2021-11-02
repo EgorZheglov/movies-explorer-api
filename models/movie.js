@@ -21,6 +21,10 @@ const movieSchema = mongoose.Schema({
     required: true,
     minlength: 2,
   },
+  duration: {
+    type: Number,
+    required: true,
+  },
   country: {
     type: String,
     required: true,
@@ -71,10 +75,10 @@ const movieSchema = mongoose.Schema({
       },
       message: 'Некорректная ссылка',
     },
+  },
   movieId: {
     type: String,
     required: true,
-  }
   },
 });
 
