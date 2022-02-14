@@ -6,7 +6,7 @@ const ForbiddenError = require('../utils/ForBiddenError');
 
 const Movie = require('../models/movie');
 
-const getAllMovies = (req, res, next) => Movie.find({}).then((cards) => res.status(200).send(cards))
+const getAllMovies = (req, res, next) => Movie.find({ owner: req.user._id }).then((cards) => res.status(200).send(cards))
   .catch((err) => next(err));
 
 const deleteMovie = (req, res, next) => Movie.findById(req.params.id)
@@ -65,6 +65,7 @@ const addMovie = (req, res, next) => {
   })
     .then((movie) => res.status(200).send(movie))
     .catch((err) => {
+      console.log(err);
       if (err.name === 'ValidationError') {
         next(new BadRequestError('данные не прошли валидацию'));
       } else {
@@ -79,5 +80,3 @@ module.exports = {
   deleteMovie,
 };
 
-/* Большое спасибо за понятное ревью, */
-/* Извиняюсь за невнмательность. */
