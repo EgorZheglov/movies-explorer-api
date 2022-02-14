@@ -13,7 +13,10 @@ require("dotenv").config();
 const corsOptions = {
   origin: [
     "http://localhost:3000",
+    "http://movies.nomoredomains.work",
+    "https://movies.nomoredomains.work",
   ],
+
   methods: ["GET", "PUT", "POST", "PATCH", "DELETE", "HEAD"],
   preflightContinue: false,
   optionsSuccessStatus: 204,
