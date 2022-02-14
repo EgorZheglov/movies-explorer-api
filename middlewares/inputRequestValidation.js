@@ -16,8 +16,8 @@ const validateUsersPost = celebrate({
 
 const validateMoviePost = celebrate({
   body: Joi.object().keys({
-    nameRU: Joi.string().required().min(2).max(30),
-    nameEN: Joi.string().required().min(2).max(30),
+    nameRU: Joi.string().required().min(2).max(100),
+    nameEN: Joi.string().required().min(2).max(100),
     director: Joi.string().required(),
     duration: Joi.number().required(),
     country: Joi.string().required(),
@@ -25,8 +25,8 @@ const validateMoviePost = celebrate({
     description: Joi.string().required(),
     image: Joi.string().required(),
     trailer: Joi.string().pattern(/https?:\/\/w*\.?\w+\.\w+/).required(),
-    thumbnail: Joi.string().pattern(/https?:\/\/w*\.?\w+\.\w+/).required(),
-    movieId: Joi.string().required(),
+    thumbnail: Joi.string().required(),
+    movieId: Joi.number().required(),
   })
 });
 

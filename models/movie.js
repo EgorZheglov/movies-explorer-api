@@ -8,13 +8,13 @@ const movieSchema = mongoose.Schema({
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 30,
+    maxlength: 100,
   },
   nameEN: {
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 30,
+    maxlength: 100,
   },
   director: {
     type: String,
@@ -29,7 +29,7 @@ const movieSchema = mongoose.Schema({
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 30,
+    maxlength: 100,
   },
   year: {
     type: String,
@@ -69,12 +69,6 @@ const movieSchema = mongoose.Schema({
   thumbnail: {
     type: String,
     required: true,
-    validate: {
-      validator(link) {
-        return validator.isURL(link);
-      },
-      message: 'Некорректная ссылка',
-    },
   },
   movieId: {
     type: String,

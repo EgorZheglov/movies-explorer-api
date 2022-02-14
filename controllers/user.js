@@ -13,7 +13,6 @@ const User = require('../models/user');
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
-
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
@@ -75,10 +74,7 @@ const updateUser = (req, res, next) => User.findByIdAndUpdate(
   if (!user) {
     next(new NotFoundError('Данные не найдены'));
   } else {
-    res.status(200).send({
-      name: user.name,
-      email: user.email,
-    });
+    res.status(200).send(user);
   }
 })
   .catch((err) => {
